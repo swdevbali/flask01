@@ -14,7 +14,7 @@ def create_app():
         page = Page.query.filter_by(id=1).first()
         contents = ''
         if page is not None:
-            content = page.contents
+            contents = page.contents
 
         return render_template('index.html', TITLE='Flask-01', CONTENT=contents)
 
