@@ -12,8 +12,11 @@ def create_app():
     @app.route('/')
     def index():
         page = Page.query.filter_by(id=1).first()
+        contents = ''
+        if page is not None:
+            content = page.contents
 
-        return render_template('index.html', TITLE='Flask-01', CONTENT=page.contents)
+        return render_template('index.html', TITLE='Flask-01', CONTENT=contents)
 
     @app.route('/about')
     def about():
