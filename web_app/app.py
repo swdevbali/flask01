@@ -2,8 +2,8 @@ from flask import Flask, render_template
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
-from web_app.models import db, Page, Menu
-from web_app.views import PageModelView
+from models import db, Page, Menu
+from views import PageModelView
 
 
 def create_app():
@@ -19,8 +19,17 @@ def create_app():
     @app.route('/')
     @app.route('/<url>')
     def index(url=None):
+        print('here', url)
         if url is not None:
+            # contoh /about
             page = Page.query.filter_by(url=url).first()
+        else:
+            # contoh /
+            page = Page.query.filter_by(is_homepage=True).first()
+
+        if page is None:
+            # TODO cute 404
+            return 'Page not found for {} or homepage not set'.format(url)
 
         contents = 'empty'
         if page is not None:
